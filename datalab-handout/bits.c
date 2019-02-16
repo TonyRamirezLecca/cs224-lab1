@@ -178,8 +178,8 @@ int evenBits(void) {
 	then we shift the number by 8 and repeat until
 	all 32 bits are filled.*/
 
-     unsigned result = 0;
-     unsigned i = 0x55;
+     int result = 0;
+     int i = 0x55;
 
      result |= i;
 	 result <<= 8;
@@ -281,35 +281,7 @@ int conditional(int x, int y, int z) {
  */
 int isGreater(int x, int y) {
 
-	int sameSign = (x ^ y);
-	sameSign >>= 31;
-	sameSign = !sameSign;
-
-    int signX = x >> 31;
-	signX |= 2;
-
-	int firstBit = 1;
-	firstBit <<= 31;
-	firstBit = ~firstBit;
-
-	int x1 = firstBit & x;
-	int y1 = firstBit & y;
-
-	int difference = x1 + (~y1 + 1);
-
-	difference |= signX;
-
-	difference = (~difference + 1);
-	difference = difference + sameSign;
-
-	int check = 1;
-	check <<= 31;
-
-	difference &= check;
-
-
-	return !!difference;
-	
+	return 2;
 }
 /* Rating 4 -- 1 point each */
 /* 
@@ -325,10 +297,14 @@ int absVal(int x) {
 	  can know if there's overflow. Then if the original sign is 1 and there is overflow, return 0.
 	  if the original sign is 1 and there is no overflow, return the value. And if the original 
 	  sign is 0 return the original number.)*/
-    int sign = x >> 31; //either all 1's or 0's
-	int twosSign = (~x + 1) >> 31;
+	int sign = 0;
+	int twosSign = 0;
+    int	shouldYouReturnZero = 0;
 
-    int	shouldYouReturnZero = !(twosSign & sign);
+    sign = x >> 31; //either all 1's or 0's
+	twosSign = (~x + 1) >> 31;
+
+    shouldYouReturnZero = !(twosSign & sign);
 
 	x ^= sign; //will only complement if the sign is 1
 	x = (x + (1 & sign));
@@ -348,24 +324,8 @@ int absVal(int x) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
-     unsigned NaN = uf;
-	 NaN >>= 23;
-	 NaN &= 0xff;
-	 if (NaN == 0xff) {
-	 printf("Hello!");
-		 return uf;
-	 }
-	 else {
-		 unsigned sign = 1 << 31;
-		 unsigned temp = sign & uf;
-		 if (temp != 0) {
-			 uf &= ~sign;
-		 }
-		 else {
-			 uf |= sign;
-		 }
-		 return uf;
-	 }
+
+    return uf;
 }
 /* Float Rating 4 -- 1 point each */
 /* 
